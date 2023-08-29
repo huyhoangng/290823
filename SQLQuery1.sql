@@ -62,3 +62,55 @@ select* from Products
 select* from orderDetails
 select * from Orders
 select * from Customer
+GO
+--Câu 4
+SELECT Customer.Name
+FROM Customer
+JOIN Orders ON Customer.Customer_ID = Orders.customer_ID;
+GO
+SELECT Name, Price
+FROM Products;
+GO
+SELECT Order_ID, OrderDate
+FROM Orders;
+GO
+--Câu 5
+SELECT Name
+FROM Customer
+ORDER BY Name;
+GO
+SELECT Name, Price
+FROM Products
+ORDER BY Price DESC;
+GO
+SELECT Products.Name
+FROM Products
+JOIN OrderDetails ON Products.Product_ID = OrderDetails.Product_ID
+JOIN Orders ON OrderDetails.Order_ID = Orders.Order_ID
+JOIN Customer ON Orders.customer_ID = Customer.Customer_ID
+WHERE Customer.Name = 'hoanghuy';
+GO 
+--Câu 6
+SELECT COUNT(DISTINCT customer_ID) AS NumberOfCustomers
+FROM Orders;
+GO 
+SELECT COUNT(*) AS NumberOfProducts
+FROM Products;
+GO
+SELECT Orders.Order_ID, SUM(Products.Price * OrderDetails.Quantity) AS TotalAmount
+FROM Orders
+JOIN OrderDetails ON Orders.Order_ID = OrderDetails.Order_ID
+JOIN Products ON OrderDetails.Product_ID = Products.Product_ID
+GROUP BY Orders.Order_ID;
+GO
+--Câu 7 
+UPDATE Products
+SET Price = ABS(Price)
+WHERE Price <= 0;
+
+UPDATE Orders
+SET OrderDate = CURRENT_TIMESTAMP
+WHERE OrderDate > CURRENT_TIMESTAMP;
+
+ALTER TABLE Products
+ADD MarketReleaseDate DATE;
